@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Hanken Grotesk", ui-sans-serif, system-ui, sans-serif;
+
+  --color-brand-lime: #D2E823;
+  --color-brand-violet: #5022ED;
+  --color-brand-slate: #1E2330;
+  --color-brand-lavender: #E0DAFF;
+
+  --color-background: #faf8ff;
+  --color-surface: #ffffff;
+  --color-surface-low: #f2f3ff;
+  --color-surface-high: #e3e7fa;
+  
+  --color-error: #ba1a1a;
+  --color-error-container: #ffdad6;
+
+  /* Additional utility colors from mockup */
+  --color-social-insta: #E1306C;
+  --color-social-tiktok: #000000;
+  --color-social-youtube: #FF0000;
+  --color-social-x: #1DA1F2;
+}
+
+@layer utilities {
+  .bg-mesh {
+    background-color: var(--color-background);
+    background-image: 
+        radial-gradient(at 0% 0%, hsla(252,100%,94%,1) 0, transparent 50%), 
+        radial-gradient(at 100% 0%, hsla(67,82%,90%,1) 0, transparent 50%);
+    background-attachment: fixed;
+  }
+  
+  /* Hide scrollbar for layout polish */
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: var(--color-brand-lavender);
+    border-radius: 10px;
+  }
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-brand-slate);
+  -webkit-font-smoothing: antialiased;
+}
