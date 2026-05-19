@@ -24,6 +24,24 @@ export function AdminLinks() {
     }
   };
 
+  const handleAddLink = () => {
+    const newLink: LinkItem = {
+      id: Date.now().toString(),
+      title: 'Novo Link',
+      url: 'https://',
+      active: true,
+    };
+    setLinks([newLink, ...links]);
+  };
+
+  const handleDeleteLink = (id: string) => {
+    setLinks(links.filter((link) => link.id !== id));
+  };
+
+  const handleToggleLinkActive = (id: string) => {
+    setLinks(links.map((link) => link.id === id ? { ...link, active: !link.active } : link));
+  };
+
   return (
     <div className="flex w-full h-full">
       <div className="flex-1 w-full max-w-[800px] mx-auto py-8 md:py-12 flex flex-col gap-8 pr-0 xl:pr-10 overflow-y-auto hide-scrollbar">
@@ -33,14 +51,20 @@ export function AdminLinks() {
             <h2 className="font-display text-4xl font-extrabold text-brand-slate tracking-tight">Seus Links</h2>
             <p className="font-sans text-lg text-gray-500 mt-2">Gerencie, reordene e personalize os links da sua bio.</p>
           </div>
-          <button className="hidden md:flex items-center gap-2 px-6 py-3 rounded-full bg-brand-lime text-brand-slate font-display font-bold hover:bg-[#c4db1c] transition-transform active:scale-95 border-2 border-brand-slate shadow-sm">
+          <button 
+            onClick={handleAddLink}
+            className="hidden md:flex items-center gap-2 px-6 py-3 rounded-full bg-brand-lime text-brand-slate font-display font-bold hover:bg-[#c4db1c] transition-transform active:scale-95 border-2 border-brand-slate shadow-sm"
+          >
             <Plus size={20} />
             Adicionar Novo Link
           </button>
         </div>
 
         {/* Mobile Add Button */}
-        <button className="md:hidden w-full flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-brand-lime text-brand-slate font-display font-bold hover:bg-[#c4db1c] active:scale-95 border-2 border-brand-slate shadow-sm">
+        <button 
+          onClick={handleAddLink}
+          className="md:hidden w-full flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-brand-lime text-brand-slate font-display font-bold hover:bg-[#c4db1c] active:scale-95 border-2 border-brand-slate shadow-sm"
+        >
            <Plus size={20} />
            Adicionar Novo Link
         </button>
@@ -78,12 +102,14 @@ export function AdminLinks() {
                   <div className="flex-grow w-full">
                     <input 
                       type="text" 
-                      defaultValue={link.title}
+                      value={link.title}
+                      onChange={(e) => setLinks(links.map(l => l.id === link.id ? { ...l, title: e.target.value } : l))}
                       className="font-display text-base font-bold text-brand-slate bg-transparent border-none p-0 focus:ring-0 w-full placeholder-gray-400 focus:outline-none focus:border-b-2 focus:border-brand-violet transition-all"
                     />
                     <input 
                       type="text" 
-                      defaultValue={link.url}
+                      value={link.url}
+                      onChange={(e) => setLinks(links.map(l => l.id === link.id ? { ...l, url: e.target.value } : l))}
                       className="font-sans text-sm text-gray-500 bg-transparent border-none p-0 mt-1 focus:ring-0 w-full focus:outline-none focus:border-b-2 focus:border-brand-violet transition-all"
                     />
                   </div>
@@ -94,14 +120,23 @@ export function AdminLinks() {
                     <button className="p-2 rounded-full hover:bg-brand-lavender/50 text-gray-500 hover:text-brand-violet transition-colors" title="Edit">
                       <Edit2 size={18} />
                     </button>
-                    <button className="p-2 rounded-full hover:bg-error-container text-gray-500 hover:text-error transition-colors" title="Delete">
+                    <button 
+                      onClick={() => handleDeleteLink(link.id)}
+                      className="p-2 rounded-full hover:bg-error-container text-gray-500 hover:text-error transition-colors" 
+                      title="Delete"
+                    >
                       <Trash2 size={18} />
                     </button>
                   </div>
                   
                   {/* Toggle switch visual */}
                   <label className="relative inline-flex items-center cursor-pointer">
-                    <input type="checkbox" defaultChecked={link.active} className="sr-only peer" />
+                    <input 
+                      type="checkbox" 
+                      checked={link.active} 
+                      onChange={() => handleToggleLinkActive(link.id)}
+                      className="sr-only peer" 
+                    />
                     <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-brand-violet"></div>
                   </label>
                 </div>
@@ -129,7 +164,7 @@ export function AdminLinks() {
       
       {/* Phone Mockup at the side for AdminLinks view */}
       <div className="hidden xl:block">
-        <PhoneMockup />
+        <PhoneMockup links={links} />
       </div>
     </div>
   );

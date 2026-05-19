@@ -1,7 +1,8 @@
-import { PlayCircle, ShoppingBag, MessageSquare, Mail, Camera, Twitter, Music, Zap, CheckCircle2 } from 'lucide-react';
+import { PlayCircle, ShoppingBag, MessageSquare, Mail, Camera, Twitter, Music, Zap, CheckCircle2, Link2 } from 'lucide-react';
 import { motion } from 'motion/react';
+import { LinkItem } from '../types';
 
-export function PublicProfile({ isPro = false }: { isPro?: boolean }) {
+export function PublicProfile({ isPro = false, links }: { isPro?: boolean, links?: LinkItem[] }) {
   return (
     <div className="bg-mesh min-h-full flex flex-col items-center py-12 px-4 relative overflow-x-hidden w-full">
       <main className="w-full max-w-[420px] flex flex-col gap-12 items-center relative z-10 pb-20">
@@ -39,7 +40,7 @@ export function PublicProfile({ isPro = false }: { isPro?: boolean }) {
 
         {/* Links Section */}
         <nav className="w-full flex flex-col gap-3">
-          {/* Highlight Link */}
+          {/* Highlight Link - can keep as static demo or make dynamic later */}
           <motion.a 
             whileHover={{ y: -4 }}
             whileTap={{ scale: 0.98 }}
@@ -55,10 +56,18 @@ export function PublicProfile({ isPro = false }: { isPro?: boolean }) {
             </div>
           </motion.a>
 
-          {/* Secondary Links */}
-          <LinkButton icon={<ShoppingBag size={20} />} label="Minha Lista de Equipamentos Essenciais" />
-          <LinkButton icon={<MessageSquare size={20} />} label="Entre no Discord de Tech" />
-          <LinkButton icon={<Mail size={20} />} label="Contato Comercial" />
+          {/* Render dynamic links if provided, otherwise default static */}
+          {links && links.length > 0 ? (
+            links.filter(l => l.active).map(l => (
+              <LinkButton key={l.id} icon={<Link2 size={20} />} label={l.title} href={l.url} />
+            ))
+          ) : (
+            <>
+              <LinkButton icon={<ShoppingBag size={20} />} label="Minha Lista de Equipamentos Essenciais" />
+              <LinkButton icon={<MessageSquare size={20} />} label="Entre no Discord de Tech" />
+              <LinkButton icon={<Mail size={20} />} label="Contato Comercial" />
+            </>
+          )}
         </nav>
 
         {/* Social Icons */}
@@ -86,12 +95,12 @@ export function PublicProfile({ isPro = false }: { isPro?: boolean }) {
   );
 }
 
-function LinkButton({ icon, label }: { icon: React.ReactNode, label: string }) {
+function LinkButton({ icon, label, href = "#" }: { icon: React.ReactNode, label: string, href?: string }) {
   return (
     <motion.a 
       whileHover={{ y: -2 }}
       whileTap={{ scale: 0.98 }}
-      href="#" 
+      href={href} 
       className="group w-full bg-surface-low border border-brand-lavender rounded-full py-3 px-4 flex items-center justify-between hover:bg-white hover:border-brand-violet shadow-sm hover:shadow-lg transition-colors"
     >
       <div className="flex items-center gap-4">

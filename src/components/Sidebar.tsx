@@ -71,7 +71,14 @@ export function Sidebar({ currentRoute, setRoute }: SidebarProps) {
           </button>
         </li>
         <li>
-          <button className="w-full opacity-50 flex items-center gap-3 px-4 py-3 rounded-2xl text-gray-600 cursor-not-allowed">
+          <button 
+            onClick={() => setRoute('settings')}
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all duration-300 ${
+              currentRoute === 'settings' 
+                ? 'bg-brand-violet text-white font-bold' 
+                : 'text-gray-600 hover:text-brand-violet hover:bg-brand-lavender/50'
+            }`}
+          >
             <Settings size={20} />
             <span>Configurações</span>
           </button>

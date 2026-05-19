@@ -1,4 +1,4 @@
-export type RouteState = 'links' | 'analytics' | 'profile';
+export type RouteState = 'links' | 'analytics' | 'profile' | 'appearance' | 'settings' | 'billing';
 
 export interface LinkItem {
   id: string;

@@ -8,6 +8,7 @@ import { AdminLinks } from './views/AdminLinks';
 import { AdminAnalytics } from './views/AdminAnalytics';
 import { AdminBilling } from './views/AdminBilling';
 import { AdminAppearance } from './views/AdminAppearance';
+import { AdminSettings } from './views/AdminSettings';
 import { PublicProfile } from './components/PublicProfile';
 
 // Componente simples para lidar com Posição Pública (/:username)
@@ -42,6 +43,7 @@ export default function App() {
               <Route path="links" element={<AdminLinks />} />
               <Route path="analytics" element={<AdminAnalytics />} />
               <Route path="appearance" element={<AdminAppearance />} />
+              <Route path="settings" element={<AdminSettings />} />
               <Route path="billing" element={<AdminBilling />} />
             </Route>
           </Route>

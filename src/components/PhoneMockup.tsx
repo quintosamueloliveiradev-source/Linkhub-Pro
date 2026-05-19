@@ -1,8 +1,9 @@
 import { Share } from 'lucide-react';
 import { PublicProfile } from './PublicProfile';
 import { useAuth } from '../hooks/useAuth';
+import { LinkItem } from '../types';
 
-export function PhoneMockup() {
+export function PhoneMockup({ links }: { links?: LinkItem[] }) {
   const { user } = useAuth();
   const isPro = user?.user_metadata?.plan === 'PRO';
 
@@ -26,7 +27,7 @@ export function PhoneMockup() {
            {/* Wrap profile in a scrollable frame */}
            <div className="w-full h-full overflow-y-auto overflow-x-hidden custom-scrollbar">
              <div className="scale-[0.85] origin-top">
-                <PublicProfile isPro={isPro} />
+                <PublicProfile isPro={isPro} links={links} />
              </div>
            </div>
         </div>
